@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <iomanip>
 #include <limits>
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
@@ -61,6 +63,36 @@ Student enterStudent() {
     return s;
 }
 
+Student enterStudent2() {
+    Student s;
+    cout << "Vardas: ";
+    cin >> s.name;
+    cout << "Pavardė: ";
+    cin >> s.surname;
+
+    int count;
+    cout << "Atsitiktinai sugeneruotų namų darbų įvertinimų skaičius: ";
+    while (true) {
+        if (!(cin >> count)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Įvertinimų skaičius turi būti sveikasis skaičius ne mažesnis už 0: ";
+        } else if (count < 0) {
+            cout << "Įvertinimas turi būti sveikasis skaičius tarp 0 ir 10: ";
+        } else {
+            break;
+        }
+    }
+
+    for (int i = 0; i < count; i++) {
+        s.homework.push_back(rand() % 11);
+    }
+
+    s.exam = rand() % 11;
+
+    return s;
+}
+
 double calculateMean(const vector<int> &hm, int exam) {
     if (hm.empty()) return exam*0.6;
     double s = 0;
@@ -97,6 +129,7 @@ void printStudent(Student stu, int comm) {
 int main() {
     vector<Student> students;
     int menu_choice;
+    srand(time(nullptr));
     while (true) {
         cout << "1 - Įrašyti studentus ir pažymius ranka" << endl;
         cout << "2 - Generuoti random pažymius" << endl;
@@ -131,7 +164,24 @@ int main() {
                     }
                 }
             }
-        } 
+        } else if (menu_choice == 2) {
+            string comm = "y";
+            while (comm == "y") {
+                Student s = enterStudent2();
+                s.mean = calculateMean(s.homework, s.exam);
+                s.median = calculateMedian(s.homework, s.exam);
+                students.push_back(s);
+                while (true) {
+                    cout << "Įrašyti dar vieną studentą? (y/n): ";
+                    cin >> comm;
+                    if (comm == "y" || comm == "n") {
+                        break;
+                    }
+                }
+            }
+        } else if (menu_choice == 4) {
+            break;
+        }
 
 
         int isvedimas;

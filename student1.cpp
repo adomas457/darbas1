@@ -1,19 +1,14 @@
 #include <iostream>
 #include <vector>
 #include <string>
-<<<<<<< HEAD
-=======
 #include <algorithm>
->>>>>>> a6aae34 (pridėta median funkcija)
+#include <iomanip>
 
 using std::vector;
 using std::cout;
 using std::cin;
 using std::string;
-<<<<<<< HEAD
-=======
 using std::endl;
->>>>>>> a6aae34 (pridėta median funkcija)
 
 struct Student {
     string name;
@@ -32,12 +27,6 @@ Student enterStudent() {
     cin >> s.surname;
 
     int grade;
-<<<<<<< HEAD
-    cout << "Enter homework grades (-1 to finish): ";
-    while (grade != -1) {
-        cin >> grade;
-        if (grade < 0 || grade > 10) {
-=======
     while (true) {
         cout << "Enter homework grades (-1 to finish): ";
         cin >> grade;
@@ -45,20 +34,15 @@ Student enterStudent() {
             break;
         }
         else if (grade < 0 || grade > 10 && grade) {
->>>>>>> a6aae34 (pridėta median funkcija)
+
             cout << "Invalid grade, must be between 0 and 10" << endl;
         } else {
             s.homework.push_back(grade);
         }
     }
 
-<<<<<<< HEAD
-    cout << "Enter exam grade: ";
-    while (true) {
-=======
     while (true) {
         cout << "Enter exam grade: ";
->>>>>>> a6aae34 (pridėta median funkcija)
         cin >> s.exam;
         if (s.exam >= 0 && s.exam <= 10) break;
         cout << "Invalid grade, must be between 0 an 10" << endl;
@@ -68,11 +52,7 @@ Student enterStudent() {
 }
 
 double calculateMean(const vector<int> &hm, int exam) {
-<<<<<<< HEAD
-    if (hm.empty()) return exam;
-=======
     if (hm.empty()) return exam*0.6;
->>>>>>> a6aae34 (pridėta median funkcija)
     double s = 0;
     for (int g : hm) {
         s += g;
@@ -81,11 +61,7 @@ double calculateMean(const vector<int> &hm, int exam) {
     return s * 0.4 + 0.6 * exam;
 }
 
-<<<<<<< HEAD
-int main()
-{
 
-=======
 double calculateMedian(vector<int> hm, int exam) {
     if (hm.empty()) return exam*0.6;
 
@@ -99,10 +75,30 @@ double calculateMedian(vector<int> hm, int exam) {
 }
 
 
-int main()
-{
+void printStudent(Student stu) {
+    cout << stu.surname << "\t" << stu.name << "\t" << std::fixed << std::setprecision(2) << stu.mean << endl;
+}
 
-
->>>>>>> a6aae34 (pridėta median funkcija)
+int main() {
+    vector<Student> students;
+    char comm = 'y';
+    while (comm == 'y') {
+        Student s = enterStudent();
+        s.mean = calculateMean(s.homework, s.exam);
+        s.median = calculateMedian(s.homework, s.exam);
+        students.push_back(s);
+        while (true) {
+            cout << "Enter another student? (y/n): ";
+            cin >> comm;
+            if (comm == 'y' || comm == 'n') {
+                break;
+            }
+        }
+    }
+    cout << "Pavarde" << "\t" << "Vardas" << "\t" << "Galutinis (Vid.)" << endl;
+    cout << "-------------------------------------------------------------" << endl;
+    for (const auto &stu : students) {
+            printStudent(stu);
+    }
     return 0;
 }

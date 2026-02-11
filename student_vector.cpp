@@ -3,12 +3,9 @@
 #include <string>
 #include <algorithm>
 #include <iomanip>
+#include <limits>
 
-using std::vector;
-using std::cout;
-using std::cin;
-using std::string;
-using std::endl;
+using namespace std;
 
 struct Student {
     string name;
@@ -27,25 +24,38 @@ Student enterStudent() {
     cin >> s.surname;
 
     int grade;
+    cout << "Namų darbų įvertinimai (-1 baigti): ";
     while (true) {
-        cout << "Namų darbų įvertinimai (-1 baigti): ";
-        cin >> grade;
-        if (grade == -1) {
-            break;
-        }
-        else if (grade < 0 || grade > 10) {
-
-            cout << "Įvertinimas turi būti tarp 0 ir 10" << endl;
+        if (cin >> grade) {
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            if (grade == -1) {
+                break;
+            } else if (grade >= 0 && grade <= 10) {
+                s.homework.push_back(grade);
+                cout << "Namų darbų įvertinimai (-1 baigti): ";
+            } else {
+                cout << "Įvertinimas turi būti sveikasis skaičius tarp 0 ir 10: ";
+            }
         } else {
-            s.homework.push_back(grade);
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Įvertinimas turi būti sveikasis skaičius tarp 0 ir 10: ";
         }
     }
-
+    cout << "Egzamino įvertinimas: ";
     while (true) {
-        cout << "Egzamino įvertinimas: ";
-        cin >> s.exam;
-        if (s.exam >= 0 && s.exam <= 10) break;
-        cout << "Įvertinimas turi būti tarp 0 ir 10" << endl;
+        if (cin >> s.exam) {
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            if (s.exam >=0 && s.exam <= 10) {
+                break;
+            }
+            cout << "Įvertinimas turi būti sveikasis skaičius tarp 0 ir 10: ";
+        } else {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Įvertinimas turi būti sveikasis skaičius tarp 0 ir 10: ";
+        }
+
     }
 
     return s;
@@ -77,17 +87,17 @@ double calculateMedian(vector<int> hm, int exam) {
 
 void printStudent(Student stu, int comm) {
     if (comm == 1) {
-        cout << std::left << std::setw(15) << stu.surname << std::setw(15) << stu.name << std::setw(10) << std::fixed << std::setprecision(2) << stu.mean << endl;
+        cout << left << setw(15) << stu.surname << setw(15) << stu.name << setw(10) << fixed << setprecision(2) << stu.mean << endl;
     } else if (comm == 2) {
-        cout << std::left << std::setw(15) << stu.surname << std::setw(15) << stu.name << std::setw(10) << std::fixed << std::setprecision(2) << stu.median << endl;
+        cout << left << setw(15) << stu.surname << setw(15) << stu.name << setw(10) << fixed << setprecision(2) << stu.median << endl;
     }
 
 }
 
 int main() {
     vector<Student> students;
-    char comm = 'y';
-    while (comm == 'y') {
+    string comm = "y";
+    while (comm == "y") {
         Student s = enterStudent();
         s.mean = calculateMean(s.homework, s.exam);
         s.median = calculateMedian(s.homework, s.exam);
@@ -95,7 +105,7 @@ int main() {
         while (true) {
             cout << "Įrašyti dar vieną studentą? (y/n): ";
             cin >> comm;
-            if (comm == 'y' || comm == 'n') {
+            if (comm == "y" || comm == "n") {
                 break;
             }
         }
@@ -104,13 +114,19 @@ int main() {
     int comm2;
     while (true) {
         cout << "Išvesti rezultatus vidurkio ar medianos pavidalu? (1 - vid., 2 - med.): ";
-        cin >> comm2;
-        if (comm2 == 1 || comm2 == 2 ) {
-            break;
+        if (cin>>comm2) {
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            if (comm2 == 1 || comm2 == 2 ) {
+                break;
+            }
+        } else {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
+        
     }
 
-    cout << std::left << std::setw(15) << "Pavardė" << std::setw(15) << "Vardas" << std::setw(10) << "Galutinis" << endl;
+    cout << left << setw(15) << "Pavardė" << setw(15) << "Vardas" << setw(10) << "Galutinis" << endl;
     cout << "-------------------------------------------------------------" << endl;
     for (const auto &stu : students) {
             printStudent(stu, comm2);

@@ -33,7 +33,7 @@ Student enterStudent() {
         if (grade == -1) {
             break;
         }
-        else if (grade < 0 || grade > 10 && grade) {
+        else if (grade < 0 || grade > 10) {
 
             cout << "Invalid grade, must be between 0 and 10" << endl;
         } else {

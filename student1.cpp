@@ -76,7 +76,7 @@ double calculateMedian(vector<int> hm, int exam) {
 
 
 void printStudent(Student stu) {
-    cout << stu.surname << "\t" << stu.name << "\t" << std::fixed << std::setprecision(2) << stu.mean << endl;
+    cout << std::left << std::setw(15) << stu.surname << std::setw(15) << stu.name << std::setw(10) << std::fixed << std::setprecision(2) << stu.mean << endl;
 }
 
 int main() {
@@ -95,7 +95,7 @@ int main() {
             }
         }
     }
-    cout << "Pavarde" << "\t" << "Vardas" << "\t" << "Galutinis (Vid.)" << endl;
+    cout << std::left << std::setw(15) << "Pavarde" << std::setw(15) << "Vardas" << std::setw(10) << "Galutinis (Vid.)" << endl;
     cout << "-------------------------------------------------------------" << endl;
     for (const auto &stu : students) {
             printStudent(stu);

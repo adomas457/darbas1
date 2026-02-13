@@ -95,7 +95,7 @@ Student enterStudent2() {
     return s;
 }
 
-Student enterStudent3() {
+Student enterStudent3(int count) {
     
     Student s;
     s.name = vardai[rand() % vardai.size()];
@@ -104,8 +104,6 @@ Student enterStudent3() {
     } else {
         s.surname = pavardes_mot[rand() % pavardes_mot.size()];
     }
-
-    int count = getInt("Atsitiktinai sugeneruotų namų darbų įvertinimų skaičius: ", 0);
 
     for (int j = 0; j < count; j++) {
         s.homework.push_back(rand() % 11);
@@ -176,9 +174,9 @@ int main() {
 
         } else if (choice == 3) {
             int student_count = getInt("Atsitiktinai sugeneruotų studentų skaičius: ", 1);
-
+            int count = getInt("Atsitiktinai sugeneruotų namų darbų įvertinimų skaičius: ", 0);
             for (int i = 0; i < student_count; i++) {
-                Student s = enterStudent3();
+                Student s = enterStudent3(count);
                 s.mean = calculateMean(s.homework, s.exam);
                 s.median = calculateMedian(s.homework, s.exam);
                 students.push_back(s);

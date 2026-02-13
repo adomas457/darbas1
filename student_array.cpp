@@ -87,7 +87,7 @@ Student enterStudent2() {
     cin >> s.surname;
 
     s.homework = new int[100];
-    s.length = getInt("Atsitiktinai sugeneruotų namų darbų įvertinimų skaičius: ", 0);
+    s.length = getInt("Atsitiktinai sugeneruotų namų darbų įvertinimų skaičius: ", 0, 100);
 
     for (int i = 0; i < s.length; i++) {
         s.homework[i] = rand() % 11;
@@ -98,9 +98,10 @@ Student enterStudent2() {
     return s;
 }
 
-Student enterStudent3() {
+Student enterStudent3(int length) {
     
     Student s;
+    s.length = length;
     s.name = vardai[rand() % 20];
     if (s.name.back() == 's') {
         s.surname = pavardes_vyr[rand() % 10];
@@ -109,9 +110,8 @@ Student enterStudent3() {
     }
 
     s.homework = new int[100];
-    s.length = getInt("Atsitiktinai sugeneruotų namų darbų įvertinimų skaičius: ", 0);
 
-    for (int i = 0; i < s.length; i++) {
+    for (int i = 0; i < length; i++) {
         s.homework[i] = rand() % 11;
     }
 
@@ -182,10 +182,10 @@ int main() {
             }
 
         } else if (choice == 3) {
-            student_count = getInt("Atsitiktinai sugeneruotų studentų skaičius: ", 1);
-
+            student_count = getInt("Atsitiktinai sugeneruotų studentų skaičius: ", 1, 100);
+            int length = getInt("Atsitiktinai sugeneruotų namų darbų įvertinimų skaičius: ", 0, 100);
             for (int i = 0; i < student_count; i++) {
-                Student s = enterStudent3();
+                Student s = enterStudent3(length);
                 s.mean = calculateMean(s.homework, s.length, s.exam);
                 s.median = calculateMedian(s.homework, s.length, s.exam);
                 students[i] = s;

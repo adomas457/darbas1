@@ -6,69 +6,75 @@
 #include <limits>
 #include <cstdlib>
 #include <ctime>
+#include <fstream>
+#include <sstream>
 
-using namespace std;
-
-vector<string> vardai = {"Jonas", "Adomas", "Vytautas", "Juozas", "Matas", "Mantas", "Dominykas", "Algirdas", "Gediminas", "Mindaugas", 
+std::vector<std::string> vardai = {"Jonas", "Adomas", "Vytautas", "Juozas", "Matas", "Mantas", "Dominykas", "Algirdas", "Gediminas", "Mindaugas", 
     "Laura", "Inga", "Edita", "Gabija", "Justina", "Daiva", "Rasa", "Jolita", "Asta", "Lina"};
-vector<string> pavardes_vyr = {"Pavardenis1", "Pavardenis2", "Pavardenis3", "Pavardenis4", "Pavardenis5", 
-    "Pavardenis6", "Pavardenis7", "Pavardenis8", "Pavardenis9", "Pavardenis10"
-};
-vector<string> pavardes_mot = {"Pavardenaite1", "Pavardenaite2", "Pavardenaite3", "Pavardenaite4", "Pavardenaite5",
-    "Pavardenaite6", "Pavardenaite7", "Pavardenaite8", "Pavardenaite9", "Pavardenaite10"
-};
+std::vector<std::string> pavardes_vyr = {"Pavardenis1", "Pavardenis2", "Pavardenis3", "Pavardenis4", "Pavardenis5", 
+    "Pavardenis6", "Pavardenis7", "Pavardenis8", "Pavardenis9", "Pavardenis10"};
+std::vector<std::string> pavardes_mot = {"Pavardenaitė1", "Pavardenaitė2", "Pavardenaitė3", "Pavardenaitė4", "Pavardenaitė5",
+    "Pavardenaitė6", "Pavardenaitė7", "Pavardenaitė8", "Pavardenaitė9", "Pavardenaitė10"};
 
 struct Student {
-    string name;
-    string surname;
-    vector<int> homework;
+    std::string name;
+    std::string surname;
+    std::vector<int> homework;
     int exam;
     double mean;
     double median;
 };
 
-int getInt(string prompt, int min = numeric_limits<int>::min(), int max= numeric_limits<int>::max()) {
+int getInt(std::string prompt, int min = std::numeric_limits<int>::min(), int max = std::numeric_limits<int>::max()) {
     int num;
 
     while (true) {
-        cout << prompt;
-        if (cin >> num && num >= min && num <= max) {
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        std::cout << prompt;
+        if (std::cin >> num && num >= min && num <= max) {
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             break;
         }
 
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "Įveskite sveikąjį skaičių tarp " << min << " ir " << max << "." << endl;
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Įveskite sveikąjį skaičių tarp " << min << " ir " << max << "." << std::endl;
     }
 
     return num;
 }
 
+int utf8_length(std::string s) {
+    int length = 0;
+    for (unsigned char c : s) {
+        if ((c & 0xC0) != 0x80) length++;
+    }
+    return length;
+}
+
 Student enterStudent() {
     Student s;
-    cout << "Vardas: ";
-    cin >> s.name;
-    cout << "Pavardė: ";
-    cin >> s.surname;
+    std::cout << "Vardas: ";
+    std::cin >> s.name;
+    std::cout << "Pavardė: ";
+    std::cin >> s.surname;
 
     int grade;
-    cout << "Namų darbų įvertinimai (-1 baigti): ";
+    std::cout << "Namų darbų įvertinimai (-1 baigti): ";
     while (true) {
-        if (cin >> grade) {
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        if (std::cin >> grade) {
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             if (grade == -1) {
                 break;
             } else if (grade >= 0 && grade <= 10) {
                 s.homework.push_back(grade);
-                cout << "Namų darbų įvertinimai (-1 baigti): ";
+                std::cout << "Namų darbų įvertinimai (-1 baigti): ";
             } else {
-                cout << "Įveskite sveikąjį skaičių tarp 0 ir 10: ";
+                std::cout << "Įveskite sveikąjį skaičių tarp 0 ir 10: ";
             }
         } else {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Įveskite sveikąjį skaičių tarp 0 ir 10: ";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Įveskite sveikąjį skaičių tarp 0 ir 10: ";
         }
     }
 
@@ -79,10 +85,10 @@ Student enterStudent() {
 
 Student enterStudent2() {
     Student s;
-    cout << "Vardas: ";
-    cin >> s.name;
-    cout << "Pavardė: ";
-    cin >> s.surname;
+    std::cout << "Vardas: ";
+    std::cin >> s.name;
+    std::cout << "Pavardė: ";
+    std::cin >> s.surname;
 
     int count = getInt("Atsitiktinai sugeneruotų namų darbų įvertinimų skaičius: ", 0);
 
@@ -96,7 +102,6 @@ Student enterStudent2() {
 }
 
 Student enterStudent3(int count) {
-    
     Student s;
     s.name = vardai[rand() % vardai.size()];
     if (s.name.back() == 's') {
@@ -112,11 +117,10 @@ Student enterStudent3(int count) {
     s.exam = rand() % 11;
 
     return s;
-    
 }
 
-double calculateMean(const vector<int> &hm, int exam) {
-    if (hm.empty()) return exam*0.6;
+double calculateMean(const std::vector<int> &hm, int exam) {
+    if (hm.empty()) return exam * 0.6;
     double s = 0;
     for (int g : hm) {
         s += g;
@@ -125,56 +129,69 @@ double calculateMean(const vector<int> &hm, int exam) {
     return s * 0.4 + 0.6 * exam;
 }
 
+double calculateMedian(std::vector<int> hm, int exam) {
+    if (hm.empty()) return exam * 0.6;
 
-double calculateMedian(vector<int> hm, int exam) {
-    if (hm.empty()) return exam*0.6;
-
-    sort(hm.begin(), hm.end());
+    std::sort(hm.begin(), hm.end());
     int pos = hm.size() / 2;
     if (hm.size() % 2 == 0) {
-       return (hm[pos-1] + hm[pos]) / 2.0 * 0.4 + exam * 0.6;
-    } else{
+        return (hm[pos - 1] + hm[pos]) / 2.0 * 0.4 + exam * 0.6;
+    } else {
         return hm[pos] * 0.4 + exam * 0.6;
     }
 }
 
+void printStudent(const Student& stu, int comm) {
+    int surnameWidth = 30;
+    int nameWidth = 25;
 
-void printStudent(Student stu, int comm) {
-    if (comm == 1) {
-        cout << left << setw(20) << stu.surname << setw(15) << left <<  stu.name << left <<  setw(10) << fixed << setprecision(2) << stu.mean << endl;
-    } else if (comm == 2) {
-        cout << left << setw(20) << stu.surname << setw(15) << left <<  stu.name << left <<  setw(10) << fixed << setprecision(2) << stu.median << endl;
-    }
+    std::cout << stu.surname;
+    std::cout << std::string(surnameWidth - utf8_length(stu.surname), ' ');
 
+    std::cout << stu.name;
+    std::cout << std::string(nameWidth - utf8_length(stu.name), ' ');
+
+    if (comm == 1)
+        std::cout << std::fixed << std::setprecision(2) << stu.mean;
+    else
+        std::cout << std::fixed << std::setprecision(2) << stu.median;
+
+    std::cout << std::endl;
 }
 
 int main() {
-    vector<Student> students;
-    srand(time(nullptr));
+    std::vector<Student> students;
+    std::srand(std::time(nullptr));
+
     while (true) {
-        cout << "1 - Įrašyti studentus ir pažymius ranka" << endl;
-        cout << "2 - Generuoti random pažymius" << endl;
-        cout << "3 - Generuoti random studentus ir pažymius" << endl;
-        cout << "4 - Exit" << endl;
-        int choice = getInt("Veiksmas: ", 1, 4);
+        std::cout << "1 - Įrašyti studentus ir pažymius ranka" << std::endl;
+        std::cout << "2 - Generuoti random pažymius" << std::endl;
+        std::cout << "3 - Generuoti random studentus ir pažymius" << std::endl;
+        std::cout << "4 - Nuskaityti iš failo" << std::endl;
+        std::cout << "5 - Exit" << std::endl;
+
+        int choice = getInt("Veiksmas: ", 1, 5);
 
         if (choice == 1 || choice == 2) {
             while (true) {
                 Student s;
                 if (choice == 1) s = enterStudent();
                 else s = enterStudent2();
+
                 s.mean = calculateMean(s.homework, s.exam);
                 s.median = calculateMedian(s.homework, s.exam);
                 students.push_back(s);
-                string comm;
-                cout << "Įrašyti dar vieną studentą? (y/n): ";
-                cin >> comm;
+
+                std::string comm;
+                std::cout << "Įrašyti dar vieną studentą? (y/n): ";
+                std::cin >> comm;
                 if (comm != "y") break;
             }
 
         } else if (choice == 3) {
             int student_count = getInt("Atsitiktinai sugeneruotų studentų skaičius: ", 1);
             int count = getInt("Atsitiktinai sugeneruotų namų darbų įvertinimų skaičius: ", 0);
+
             for (int i = 0; i < student_count; i++) {
                 Student s = enterStudent3(count);
                 s.mean = calculateMean(s.homework, s.exam);
@@ -182,21 +199,35 @@ int main() {
                 students.push_back(s);
             }
 
-        } else {
-            break;
+        } else if (choice == 4) {
+            std::string filename;
+            std::cout << "Įveskite failo pavadinimą: ";
+            std::cin >> filename;
+
+            
         } 
+        else {
+            break;
+        }
 
         int isvedimas = getInt("Išvesti rezultatus vidurkio ar medianos pavidalu? (1 - vid., 2 - med.): ", 1, 2);
-        cout << left << setw(20) << "Pavardė" << left << setw(15) << "Vardas" << left << setw(10) << "Galutinis" << endl;
-        cout << "-------------------------------------------------------------" << endl;
+
+        std::cout << "Pavardė";
+        std::cout << std::string(30 - utf8_length("Pavardė"), ' ');
+
+        std::cout << "Vardas";
+        std::cout << std::string(25 - utf8_length("Vardas"), ' ');
+
+        std::cout << "Galutinis" << std::endl;
+        std::cout << std::string(70, '-') << std::endl;
+
         for (const auto &stu : students) {
-                printStudent(stu, isvedimas);
+            printStudent(stu, isvedimas);
         }
-        cout << "-------------------------------------------------------------" << endl;
+
+        std::cout << std::string(70, '-') << std::endl;
         students.clear();
-
     }
-
 
     return 0;
 }

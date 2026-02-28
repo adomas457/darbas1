@@ -8,6 +8,7 @@
 #include <ctime>
 #include <fstream>
 #include <sstream>
+//#include <chrono>
 
 std::vector<std::string> vardai = {"Jonas", "Adomas", "Vytautas", "Juozas", "Matas", "Mantas", "Dominykas", "Algirdas", "Gediminas", "Mindaugas", 
     "Laura", "Inga", "Edita", "Gabija", "Justina", "Daiva", "Rasa", "Jolita", "Asta", "Lina"};
@@ -201,7 +202,7 @@ std::vector<Student> readFile(std::string filename) {
 
 void printStudent(const Student& stu) {
     int surnameWidth = 30;
-    int gradeWidth = 25;
+    int gradeWidth = 30;
     int nameWidth = 25;
 
     std::cout << stu.surname;
@@ -272,7 +273,13 @@ int main() {
             std::cout << "Įveskite failo pavadinimą: ";
             std::cin >> filename;
 
+            //auto start = std::chrono::high_resolution_clock::now();
+
             students = readFile(filename);
+
+            //auto end = std::chrono::high_resolution_clock::now();
+            //std::chrono::duration<double> diff = end - start;
+            //std::cout << "Laikas: " << diff.count() << std::endl;
         } 
         else {
             break;

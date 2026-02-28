@@ -119,6 +119,7 @@ Student enterStudent3(int count) {
     return s;
 }
 
+
 double calculateMean(const std::vector<int> &hm, int exam) {
     if (hm.empty()) return exam * 0.6;
     double s = 0;
@@ -139,6 +140,43 @@ double calculateMedian(std::vector<int> hm, int exam) {
     } else {
         return hm[pos] * 0.4 + exam * 0.6;
     }
+}
+
+std::vector<Student> readFile(std::string filename) {
+    std::vector<Student> students;
+    std::ifstream file(filename);
+
+    if (!file) {
+        std::cout << "Nepavyko atidaryti failo." << std::endl;
+        return students;
+    }
+
+    std::string line;
+    std::getline(file, line);
+
+    while (std::getline(file, line)) {
+        std::stringstream ss(line);
+        Student s;
+
+        ss >> s.name >> s.surname;
+        
+        int grade;
+        std::vector<int> hm;
+        while (ss >> grade) {
+            hm.push_back(grade);
+        }
+
+        s.exam = hm.back();
+        hm.pop_back();
+        s.homework = hm;
+
+        s.mean = calculateMean(s.homework, s.exam);
+        s.median = calculateMedian(s.homework, s.exam);
+
+        students.push_back(s);
+    }
+
+    return students;
 }
 
 void printStudent(const Student& stu, int comm) {
@@ -204,7 +242,7 @@ int main() {
             std::cout << "Įveskite failo pavadinimą: ";
             std::cin >> filename;
 
-            
+            students = readFile(filename);
         } 
         else {
             break;

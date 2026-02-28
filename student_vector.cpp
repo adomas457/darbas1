@@ -16,6 +16,8 @@ std::vector<std::string> pavardes_vyr = {"Pavardenis1", "Pavardenis2", "Pavarden
 std::vector<std::string> pavardes_mot = {"Pavardenaitė1", "Pavardenaitė2", "Pavardenaitė3", "Pavardenaitė4", "Pavardenaitė5",
     "Pavardenaitė6", "Pavardenaitė7", "Pavardenaitė8", "Pavardenaitė9", "Pavardenaitė10"};
 
+int rusiavimas = 2;
+
 struct Student {
     std::string name;
     std::string surname;
@@ -179,7 +181,7 @@ std::vector<Student> readFile(std::string filename) {
     return students;
 }
 
-void printStudent(const Student& stu, int comm) {
+/*void printStudent(const Student& stu, int comm) {
     int surnameWidth = 30;
     int nameWidth = 25;
 
@@ -195,6 +197,34 @@ void printStudent(const Student& stu, int comm) {
         std::cout << std::fixed << std::setprecision(2) << stu.median;
 
     std::cout << std::endl;
+}*/
+
+void printStudent(const Student& stu) {
+    int surnameWidth = 30;
+    int gradeWidth = 25;
+    int nameWidth = 25;
+
+    std::cout << stu.surname;
+    std::cout << std::string(surnameWidth - utf8_length(stu.surname), ' ');
+
+    std::cout << stu.name;
+    std::cout << std::string(nameWidth - utf8_length(stu.name), ' ');
+
+    std::cout << std::left << std::setw(gradeWidth) << std::fixed << std::setprecision(2) << stu.mean;
+
+    std::cout << std::fixed << std::setprecision(2) << stu.median;
+
+    std::cout << std::endl;
+}
+
+bool rusiuoti(const Student& s1, const Student& s2) {
+    switch (rusiavimas) {
+        case 1: return s1.name < s2.name;
+        case 2: return s1.surname < s2.surname;
+        case 3: return s1.mean < s2.mean;
+        case 4: return s1.median < s2.median;
+    }
+    return false;
 }
 
 int main() {
@@ -248,7 +278,10 @@ int main() {
             break;
         }
 
-        int isvedimas = getInt("Išvesti rezultatus vidurkio ar medianos pavidalu? (1 - vid., 2 - med.): ", 1, 2);
+        //int isvedimas = getInt("Išvesti rezultatus vidurkio ar medianos pavidalu? (1 - vid., 2 - med.): ", 1, 2);
+        
+        rusiavimas = getInt("Surūšiuoti pagal: vardą (1); pavardę (2); pagal vidurkį (3); pagal medianą (4): ", 1, 4);
+        std::sort(students.begin(), students.end(), rusiuoti);
 
         std::cout << "Pavardė";
         std::cout << std::string(30 - utf8_length("Pavardė"), ' ');
@@ -256,14 +289,17 @@ int main() {
         std::cout << "Vardas";
         std::cout << std::string(25 - utf8_length("Vardas"), ' ');
 
-        std::cout << "Galutinis" << std::endl;
-        std::cout << std::string(70, '-') << std::endl;
+        std::cout << "Galutinis (Vid.)";
+        std::cout << std::string(30 - utf8_length("Galutinis (Vid.)"), ' ');
+        std::cout << "Galutinis (Med.)" << std::endl;
+        std::cout << std::string(100, '-') << std::endl;
 
         for (const auto &stu : students) {
-            printStudent(stu, isvedimas);
+            //printStudent(stu, isvedimas);
+            printStudent(stu);
         }
 
-        std::cout << std::string(70, '-') << std::endl;
+        std::cout << std::string(100, '-') << std::endl;
         students.clear();
     }
 

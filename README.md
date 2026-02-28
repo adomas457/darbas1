@@ -1,35 +1,34 @@
-# v0.1
+# v0.2
 
 
 
-Ši versija susideda iš dviejų cpp failų: vienas naudoja tik std::vector, o kitas - C tipo masyvus. Taip pat pridėta menu funkcija (pats vartotojas nusprendžia kaip naudosis programa): 
+Ši versija leidžia: 
 
 
 
-* Įvesti studentų vardus, pavardes, pažymius ranka (1 menu option)
-* Įvesti tik studentų vardus ir pavardes ranka - visi pažymiai atsitiktinai sugeneruojami (2 menu option)
-* Tiek studentų vardus ir pavardes, tiek pažymius sugeneruoti atsitiktinai (3 menu option)
-* Pačiam vartotojui nuspręsti, kada jis nori užbaigti programos darbą (4 menu option)
+* Duomenų nuskaitymas iš failo (kursiokai.txt pavidalu)
+* Rezultatų išvedimas išlygiuotuose stulpeliuose
+* Rezultatų rūšiavimas pagal: vardą, pavardę, vidurkį, ir medianą
 
 
 
-Taip pat veikia klaidų valdymas:
+Būtinas nuskaitomojo failo formatas (veikia nepriklausomai nuo ND stulpelių skaičiaus, t.y. nebūtinai iki ND5):
 
 
 
-* Programa neleidžia įvesti neleistinų reikšmių (pvz. įvesti raides, kai prašoma skaičiaus)
-* Jei nėra įvesta namų darbų - galutiniame rezultate dalyvauja tik egzamino balas
-* Neteisingi įrašymai visada pranešami ir paprašoma pakartoti įvestį
+* Vardas Pavardė ND1 ND2 ND3 ND4 ND5 Egzaminas
 
 
 
-Naudojimas:
+Txt failų testavimo rezultatai (5 bandymų vidurkis, -O2):
 
 
 
-* Kompiliuoti student\_vector.cpp arba student\_array.cpp
-* Vykdyti atitinkamą .exe failą
-* Sekti menu nurodymus
+* studentai10000.txt 0.0149626s
+* studentai100000.txt 0.180035s
+* studentai1000000.txt 0.79862s
+
+
 
 
 

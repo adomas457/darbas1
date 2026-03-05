@@ -62,25 +62,47 @@ int main() {
             break;
         }
 
-        //int isvedimas = getInt("Išvesti rezultatus vidurkio ar medianos pavidalu? (1 - vid., 2 - med.): ", 1, 2);
-        
-        rusiavimas = getInt("Surūšiuoti pagal: vardą (1); pavardę (2); pagal vidurkį (3); pagal medianą (4): ", 1, 4);
-        std::sort(students.begin(), students.end(), rusiuoti);
+        if (choice == 4) {
+            rusiavimas = getInt("Surūšiuoti pagal: vardą (1); pavardę (2); pagal vidurkį (3); pagal medianą (4): ", 1, 4);
+            std::sort(students.begin(), students.end(), rusiuoti);
 
-        std::cout << "Pavardė";
-        std::cout << std::string(30 - utf8_length("Pavardė"), ' ');
+            std::cout << "Pavardė";
+            std::cout << std::string(30 - utf8_length("Pavardė"), ' ');
 
-        std::cout << "Vardas";
-        std::cout << std::string(25 - utf8_length("Vardas"), ' ');
+            std::cout << "Vardas";
+            std::cout << std::string(25 - utf8_length("Vardas"), ' ');
 
-        std::cout << "Galutinis (Vid.)";
-        std::cout << std::string(30 - utf8_length("Galutinis (Vid.)"), ' ');
-        std::cout << "Galutinis (Med.)" << std::endl;
-        std::cout << std::string(100, '-') << std::endl;
+            std::cout << "Galutinis (Vid.)";
+
+
+            std::cout << std::string(30 - utf8_length("Galutinis (Vid.)"), ' ');
+            std::cout << "Galutinis (Med.)" << std::endl;
+            std::cout << std::string(100, '-') << std::endl;
 
         for (const auto &stu : students) {
-            //printStudent(stu, isvedimas);
             printStudent(stu);
+        }
+
+        } else {
+            int isvedimas = getInt("Išvesti rezultatus vidurkio ar medianos pavidalu? (1 - vid., 2 - med.): ", 1, 2);
+
+            std::cout << "Pavardė";
+            std::cout << std::string(30 - utf8_length("Pavardė"), ' ');
+
+            std::cout << "Vardas";
+            std::cout << std::string(25 - utf8_length("Vardas"), ' ');
+
+            if (isvedimas == 1) {
+                std::cout << "Galutinis (Vid.)" << std::endl;
+            } else {
+                std::cout << "Galutinis (Med.)"  << std::endl;
+            }
+            
+            std::cout << std::string(100, '-') << std::endl;
+
+            for (const auto &stu : students) {
+                printStudent(stu, isvedimas);
+            }
         }
 
         std::cout << std::string(100, '-') << std::endl;

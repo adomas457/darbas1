@@ -14,14 +14,11 @@ Student enterStudent2();
 Student enterStudent3(int count);
 
 std::vector<Student> readFile(const std::string& filename);
+void printStudent(const Student &stu, int comm);
 void printStudent(const Student& stu);
 
 bool rusiuoti(const Student& s1, const Student& s2);
 
-extern std::vector<std::string> vardai;
-extern std::vector<std::string> pavardes_vyr;
-extern std::vector<std::string> pavardes_mot;
 extern int rusiavimas;
-
 
 #endif

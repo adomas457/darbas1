@@ -13,15 +13,23 @@ int getInt(const std::string &prompt, int min, int max) {
     int num;
 
     while (true) {
-        std::cout << prompt;
-        if (std::cin >> num && num >= min && num <= max) {
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            break;
-        }
+        try {
+            std::cout << prompt;
 
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cout << "Įveskite sveikąjį skaičių tarp " << min << " ir " << max << "." << std::endl;
+            if (!(std::cin >> num) || (num < min || num > max)) throw std::runtime_error("Įveskite sveikąjį skaičių tarp " + std::to_string(min) + " ir " + std::to_string(max) + ".");
+            
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            return num;
+
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Įveskite sveikąjį skaičių tarp " << min << " ir " << max << "." << std::endl;
+        } catch (std::exception &e) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << e.what() << std::endl;
+        }
+        
     }
 
     return num;
@@ -44,22 +52,21 @@ Student enterStudent() {
     std::cin >> s.surname;
 
     int grade;
-    std::cout << "Namų darbų įvertinimai (-1 baigti): ";
     while (true) {
-        if (std::cin >> grade) {
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        try {
+            std::cout << "Namų darbų įvertinimai (-1 baigti): ";
+
+            if (!(std::cin >> grade) || ((grade < 0 && grade != -1) || grade > 10)) throw std::runtime_error("Įveskite sveikąjį skaičių tarp 0 ir 10.");
+
             if (grade == -1) {
                 break;
-            } else if (grade >= 0 && grade <= 10) {
-                s.homework.push_back(grade);
-                std::cout << "Namų darbų įvertinimai (-1 baigti): ";
             } else {
-                std::cout << "Įveskite sveikąjį skaičių tarp 0 ir 10: ";
-            }
-        } else {
+                s.homework.push_back(grade);
+            } 
+        } catch (std::exception &e) {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "Įveskite sveikąjį skaičių tarp 0 ir 10: ";
+            std::cout << e.what() << std::endl;
         }
     }
 
@@ -109,8 +116,7 @@ std::vector<Student> readFile(const std::string &filename) {
     std::ifstream file(filename);
 
     if (!file) {
-        std::cout << "Nepavyko atidaryti failo." << std::endl;
-        return students;
+        throw std::runtime_error("Failas nerastas.");
     }
 
     std::string line;

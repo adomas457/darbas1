@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <ctime>
+#include <string>
 #include "utils.h"
 
 int main() {
@@ -51,8 +52,13 @@ int main() {
             std::cin >> filename;
 
             //auto start = std::chrono::high_resolution_clock::now();
-
-            students = readFile(filename);
+            try {
+               students = readFile(filename); 
+            }
+            catch (std::exception& e) {
+                std::cout << e.what() << std::endl;
+                continue;
+            }
 
             //auto end = std::chrono::high_resolution_clock::now();
             //std::chrono::duration<double> diff = end - start;

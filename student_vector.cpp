@@ -15,9 +15,10 @@ int main() {
         std::cout << "2 - Generuoti random pažymius" << std::endl;
         std::cout << "3 - Generuoti random studentus ir pažymius" << std::endl;
         std::cout << "4 - Nuskaityti iš failo" << std::endl;
-        std::cout << "5 - Exit" << std::endl;
+        std::cout << "5 - Kurti failą" << std::endl;
+        std::cout << "6 - Exit" << std::endl;
 
-        int choice = getInt("Veiksmas: ", 1, 5);
+        int choice = getInt("Veiksmas: ", 1, 6);
 
 
         if (choice == 1 || choice == 2) {
@@ -64,7 +65,15 @@ int main() {
             //auto end = std::chrono::high_resolution_clock::now();
             //std::chrono::duration<double> diff = end - start;
             //std::cout << "Laikas: " << diff.count() << std::endl;
-        } 
+        } else if (choice == 5) {
+            generateFile("studentai10000000.txt", 10000000, 10);
+            try {
+                splitStudent("studentai10000000.txt", "geri10000000.txt", "blogi10000000.txt");
+            } catch (std::exception& e) {
+                std::cout << e.what() << std::endl;
+                continue;
+            }
+        }
         else {
             break;
         }
@@ -90,7 +99,7 @@ int main() {
                 printStudent(stu);
             }
 
-        } else {
+        } else if (choice == 1 || choice == 2 || choice == 3){
             int isvedimas = getInt("Išvesti rezultatus vidurkio ar medianos pavidalu? (1 - vid., 2 - med.): ", 1, 2);
 
             std::cout << "Pavardė";

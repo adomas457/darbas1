@@ -15,6 +15,7 @@ struct Student {
 
 double calculateMean(const std::vector<int> &hm, int exam);
 double calculateMedian(std::vector<int> hm, int);
+void splitStudent(const std::string &filename, const std::string &geri, const std::string &blogi);
 
 extern std::vector<std::string> vardai;
 extern std::vector<std::string> pavardes_vyr;

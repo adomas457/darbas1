@@ -1,5 +1,7 @@
 #include "student.h"
 #include <algorithm>
+#include <fstream>
+#include <sstream>
 
 std::vector<std::string> vardai = {"Jonas", "Adomas", "Vytautas", "Juozas", "Matas", "Mantas", "Dominykas", "Algirdas", "Gediminas", "Mindaugas", 
     "Laura", "Inga", "Edita", "Gabija", "Justina", "Daiva", "Rasa", "Jolita", "Asta", "Lina"};
@@ -27,5 +29,43 @@ double calculateMedian(std::vector<int> hm, int exam) {
         return (hm[pos - 1] + hm[pos]) / 2.0 * 0.4 + exam * 0.6;
     } else {
         return hm[pos] * 0.4 + exam * 0.6;
+    }
+}
+
+void splitStudent(const std::string &filename, const std::string &geri, const std::string &blogi) {
+    std::ifstream file(filename);
+    if (!file) throw std::runtime_error("Failas nerastas.");
+
+    std::ofstream fileGeri(geri);
+    std::ofstream fileBlogi(blogi);
+
+    std::string header;
+    std::getline(file, header);
+    fileGeri << header << "\n";
+    fileBlogi << header << "\n";
+
+    std::string line;
+    while (std::getline(file, line)) {
+        std::stringstream ss(line);
+        Student s;
+        ss >> s.name >> s.surname;
+
+        int grade;
+        std::vector<int> hm;
+        while (ss >> grade) {
+            hm.push_back(grade);
+        }
+
+        s.exam = hm.back();
+        hm.pop_back();
+        s.homework = hm;
+
+        s.mean = calculateMean(s.homework, s.exam);
+        
+        if (s.mean < 5.0) {
+            fileBlogi << line << "\n";
+        } else {
+            fileGeri << line << "\n";
+        }
     }
 }

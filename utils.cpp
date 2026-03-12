@@ -148,6 +148,26 @@ std::vector<Student> readFile(const std::string &filename) {
 }
 
 
+void generateFile(const std::string &filename, int n, int nd) {
+    std::ofstream file(filename);
+
+    file << "Vardas Pavarde ";
+    for (int i = 1; i <= nd; i++) {
+        file << "ND" << i << " ";
+    }
+    file << "Egz.\n";
+
+    for (int i = 1; i <= n; i++) {
+        file << "Vardas" << i << " Pavarde" << i;
+
+        for (int j = 1; j <= nd; j++) {
+            file << " " << rand() % 11;
+        }
+        file << " " << rand() % 11 << '\n';
+    }
+}
+
+
 
 void printStudent(const Student& stu, int comm) {
     int surnameWidth = 30;

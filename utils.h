@@ -17,6 +17,8 @@ std::vector<Student> readFile(const std::string& filename);
 void printStudent(const Student &stu, int comm);
 void printStudent(const Student& stu);
 
+void generateFile(const std::string &filename, int n, int nd);
+
 bool rusiuoti(const Student& s1, const Student& s2);
 
 extern int rusiavimas;

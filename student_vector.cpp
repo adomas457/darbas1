@@ -17,7 +17,10 @@ int main() {
         std::cout << "4 - Nuskaityti iš failo" << std::endl;
         std::cout << "5 - Exit" << std::endl;
 
+        generateFile("studentai10.txt", 10, 10);
+
         int choice = getInt("Veiksmas: ", 1, 5);
+
 
         if (choice == 1 || choice == 2) {
             while (true) {
@@ -85,9 +88,9 @@ int main() {
             std::cout << "Galutinis (Med.)" << std::endl;
             std::cout << std::string(100, '-') << std::endl;
 
-        for (const auto &stu : students) {
-            printStudent(stu);
-        }
+            for (const auto &stu : students) {
+                printStudent(stu);
+            }
 
         } else {
             int isvedimas = getInt("Išvesti rezultatus vidurkio ar medianos pavidalu? (1 - vid., 2 - med.): ", 1, 2);

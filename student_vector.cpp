@@ -17,8 +17,6 @@ int main() {
         std::cout << "4 - Nuskaityti iš failo" << std::endl;
         std::cout << "5 - Exit" << std::endl;
 
-        generateFile("studentai10.txt", 10, 10);
-
         int choice = getInt("Veiksmas: ", 1, 5);
 
 

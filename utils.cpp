@@ -151,19 +151,19 @@ std::vector<Student> readFile(const std::string &filename) {
 void generateFile(const std::string &filename, int n, int nd) {
     std::ofstream file(filename);
 
-    file << "Vardas Pavarde ";
+    file << std::left << std::setw(15) << "Vardas" << std::left << std::setw(15) << "Pavarde";
     for (int i = 1; i <= nd; i++) {
-        file << "ND" << i << " ";
+        file << std::left << std::setw(10) << ("ND" + std::to_string(i));
     }
     file << "Egz.\n";
 
     for (int i = 1; i <= n; i++) {
-        file << "Vardas" << i << " Pavarde" << i;
+        file << std::left << std::setw(15) << ("Vardas" + std::to_string(i)) << std::left << std::setw(15) << ("Pavarde" + std::to_string(i));
 
-        for (int j = 1; j <= nd; j++) {
-            file << " " << rand() % 11;
-        }
-        file << " " << rand() % 11 << '\n';
+        for (int j = 0; j < nd; j++)
+            file << std::left << std::setw(10) << (rand() % 11);
+
+        file << std::left << std::setw(10) << (rand() % 11) << '\n';
     }
 }
 

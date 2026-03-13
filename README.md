@@ -1,10 +1,27 @@
-# v0.3
+# v0.4
 
 
 
-Šioje versijoje:
+\## Šioje versijoje:
 
 
 
-* Vykdomas exception handling duomenų rankinėje įvestyje bei failų pavadinimų tikrinime
-* Originalios programos funkcijos (išskyrus main) suskirstytos į utils.cpp/utils.h ir student.cpp/student.h failuose.
+* Kiekvienas testas atliktas naudojant -O2
+* Testai atlikti po 3 kartus kiekvienam iš penkių failų
+
+
+
+\## Testavimo rezultatai
+
+
+
+!\[Excel lentelė](images/table.png)
+
+
+
+\## Programos veikimo pvz
+
+
+
+!\[Veikimas](images/sample.png)
+

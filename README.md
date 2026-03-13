@@ -2,7 +2,7 @@
 
 
 
-\## Šioje versijoje:
+##### Šioje versijoje:
 
 
 
@@ -11,7 +11,7 @@
 
 
 
-\## Testavimo rezultatai
+##### Testavimo rezultatai
 
 
 
@@ -19,7 +19,7 @@
 
 
 
-\## Programos veikimo pvz
+##### Programos veikimo pvz
 
 
 

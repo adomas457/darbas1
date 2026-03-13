@@ -63,7 +63,7 @@ int main() {
             }
 
         } else if (choice == 5) {
-            int test = 1000;
+            int test = getInt("Įveskite įrašų skaičių: ", 1);
             auto start1 = std::chrono::high_resolution_clock::now();
 
             generateFile("studentai" + std::to_string(test) + ".txt", test, 10);

@@ -87,7 +87,7 @@ void splitStudent(const std::string &filename, const std::string &geri, const st
     std::sort(blogiStud.begin(), blogiStud.end(), rusiuotiPagalMean);
 
     auto end2 = std::chrono::high_resolution_clock::now();
-    std::cout << "Gerų ir blogų stud. rūšiavimas, kurie turi " << test << " įrašų rūšiavimo did. tvarka laikas: " << std::chrono::duration<double>(end2 - start2).count() << " s\n" <<  std::endl;
+    std::cout << "Gerų ir blogų stud., kurie turi " << test << " įrašų rūšiavimo did. tvarka laikas: " << std::chrono::duration<double>(end2 - start2).count() << " s\n" <<  std::endl;
 
     std::ofstream fileGeri(geri);
     std::ofstream fileBlogi(blogi);

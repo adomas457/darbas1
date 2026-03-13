@@ -15,7 +15,7 @@
 
 
 
-!\[Excel lentelė](images/table.png)
+![Excel lentelė](images/table.png)
 
 
 
@@ -23,5 +23,5 @@
 
 
 
-!\[Veikimas](images/sample.png)
+![Veikimas](images/sample.png)
 

@@ -160,8 +160,7 @@ void generateFile(const std::string &filename, int n, int nd) {
     for (int i = 1; i <= n; i++) {
         file << std::left << std::setw(15) << ("Vardas" + std::to_string(i)) << std::left << std::setw(15) << ("Pavarde" + std::to_string(i));
 
-        for (int j = 0; j < nd; j++)
-            file << std::left << std::setw(10) << (rand() % 11);
+        for (int j = 0; j < nd; j++)file << std::left << std::setw(10) << (rand() % 11);
 
         file << std::left << std::setw(10) << (rand() % 11) << '\n';
     }

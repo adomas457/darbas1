@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <string>
+#include <chrono>
 #include "utils.h"
 
 int main() {
@@ -53,7 +54,6 @@ int main() {
             std::cout << "Įveskite failo pavadinimą: ";
             std::cin >> filename;
 
-            //auto start = std::chrono::high_resolution_clock::now();
             try {
                students = readFile(filename); 
             }
@@ -62,17 +62,27 @@ int main() {
                 continue;
             }
 
-            //auto end = std::chrono::high_resolution_clock::now();
-            //std::chrono::duration<double> diff = end - start;
-            //std::cout << "Laikas: " << diff.count() << std::endl;
         } else if (choice == 5) {
-            generateFile("studentai10000000.txt", 10000000, 10);
+            int test = 1000;
+            auto start1 = std::chrono::high_resolution_clock::now();
+
+            generateFile("studentai" + std::to_string(test) + ".txt", test, 10);
+
+            auto end1 = std::chrono::high_resolution_clock::now();
+            std::cout << "Failo su " << test << " įrašų kūrimo laikas: " << std::chrono::duration<double>(end1 - start1).count() << " s\n" << std::endl;
+
+            std::cout << std::string(100, '-') << std::endl;
+
+            auto start2 = std::chrono::high_resolution_clock::now();
             try {
-                splitStudent("studentai10000000.txt", "geri10000000.txt", "blogi10000000.txt");
+                splitStudent("studentai" + std::to_string(test) + ".txt", "geri" + std::to_string(test) + ".txt", "blogi"+ std::to_string(test) + ".txt", test);
             } catch (std::exception& e) {
                 std::cout << e.what() << std::endl;
                 continue;
             }
+
+             auto end2 = std::chrono::high_resolution_clock::now();
+             std::cout << "Failo su " << test << " įrašų galutinis testavimo laikas: " << std::chrono::duration<double>(end2 - start2).count() << " s\n" << std::endl;
         }
         else {
             break;

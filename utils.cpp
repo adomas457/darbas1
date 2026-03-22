@@ -6,6 +6,8 @@
 #include <iomanip>
 #include <limits>
 #include <cstdlib>
+#include <chrono>
+
 
 int rusiavimas = 2;
 
@@ -151,22 +153,20 @@ std::vector<Student> readFile(const std::string &filename) {
 void generateFile(const std::string &filename, int n, int nd) {
     std::ofstream file(filename);
 
-    file << std::left << std::setw(15) << "Vardas" << std::left << std::setw(15) << "Pavarde";
+    file << std::left << std::setw(25) << "Vardas" << std::left << std::setw(25) << "Pavarde";
     for (int i = 1; i <= nd; i++) {
         file << std::left << std::setw(10) << ("ND" + std::to_string(i));
     }
     file << "Egz.\n";
 
     for (int i = 1; i <= n; i++) {
-        file << std::left << std::setw(15) << ("Vardas" + std::to_string(i)) << std::left << std::setw(15) << ("Pavarde" + std::to_string(i));
+        file << std::left << std::setw(25) << ("Vardas" + std::to_string(i)) << std::left << std::setw(25) << ("Pavarde" + std::to_string(i));
 
         for (int j = 0; j < nd; j++)file << std::left << std::setw(10) << (rand() % 11);
 
         file << std::left << std::setw(10) << (rand() % 11) << '\n';
     }
 }
-
-
 
 void printStudent(const Student& stu, int comm) {
     int surnameWidth = 30;
@@ -186,22 +186,16 @@ void printStudent(const Student& stu, int comm) {
     std::cout << std::endl;
 }
 
-void printStudent(const Student& stu) {
+void printStudent(const Student& stu, std::ostream& out) {
     int surnameWidth = 30;
     int gradeWidth = 30;
     int nameWidth = 25;
 
-    std::cout << stu.surname;
-    std::cout << std::string(surnameWidth - utf8_length(stu.surname), ' ');
-
-    std::cout << stu.name;
-    std::cout << std::string(nameWidth - utf8_length(stu.name), ' ');
-
-    std::cout << std::left << std::setw(gradeWidth) << std::fixed << std::setprecision(2) << stu.mean;
-
-    std::cout << std::fixed << std::setprecision(2) << stu.median;
-
-    std::cout << std::endl;
+    out << stu.surname << std::string(surnameWidth - utf8_length(stu.surname), ' ');
+    out << stu.name << std::string(nameWidth - utf8_length(stu.name), ' ');
+    out << std::left << std::setw(gradeWidth) << std::fixed << std::setprecision(2) << stu.mean;
+    out << std::fixed << std::setprecision(2) << stu.median;
+    out << '\n';
 }
 
 bool rusiuoti(const Student& s1, const Student& s2) {
@@ -212,4 +206,52 @@ bool rusiuoti(const Student& s1, const Student& s2) {
         case 4: return s1.median < s2.median;
     }
     return false;
+}
+
+
+void splitStudent(std::vector<Student> &stud, const std::string &geri, const std::string &blogi) {
+
+    auto start = std::chrono::high_resolution_clock::now();
+
+    std::vector<Student> geriStud;
+    std::vector<Student> blogiStud;
+
+    for (const auto &s : stud) {
+        if (s.mean >= 5.0)
+            geriStud.push_back(s);
+        else
+            blogiStud.push_back(s);
+    }
+    stud.clear();
+
+    std::sort(geriStud.begin(), geriStud.end(), rusiuoti);
+    std::sort(blogiStud.begin(), blogiStud.end(), rusiuoti);
+
+    auto end = std::chrono::high_resolution_clock::now();
+    std::cout << "Studentų rūšiavimo į dvi grupes laikas: " << std::chrono::duration<double>(end - start).count() << " s\n" << std::endl;
+
+    start = std::chrono::high_resolution_clock::now();
+
+    std::ofstream fileGeri(geri);
+    std::ofstream fileBlogi(blogi);
+
+    fileGeri << std::left << std::setw(25) << "Vardas" << std::left << std::setw(25) << "Pavarde" << std::left << std::setw(25) << "Galutinis (Vid.)" << 
+    "Galutinis (Med.)" << '\n';
+    for (const auto &s : geriStud) {
+        fileGeri << std::left << std::setw(25) << s.name << std::left << std::setw(25) << s.surname << std::left << std::setw(25) 
+        << std::fixed << std::setprecision(2) << s.mean << std::fixed << std::setprecision(2) << s.median << '\n';
+    }
+
+
+
+    fileBlogi << std::left << std::setw(25) << "Vardas" << std::left << std::setw(25) << "Pavarde" << std::left << std::setw(25) << "Galutinis (Vid.)" << 
+    "Galutinis (Med.)" << '\n';
+    for (const auto &s : blogiStud) {
+        fileBlogi << std::left << std::setw(25) << s.name << std::left << std::setw(25) << s.surname << std::left << std::setw(25) 
+        << std::fixed << std::setprecision(2) << s.mean << std::fixed << std::setprecision(2) << s.median << '\n';
+    }
+
+    end = std::chrono::high_resolution_clock::now();
+    std::cout << "Surūšiuotų studentų išvedimo į du failus laikas: " << std::chrono::duration<double>(end - start).count() << " s\n" << std::endl;
+
 }

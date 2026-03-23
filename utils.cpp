@@ -213,6 +213,8 @@ void splitStudent(std::vector<Student> &stud, const std::string &geri, const std
 
     auto start = std::chrono::high_resolution_clock::now();
 
+    std::sort(stud.begin(), stud.end(), rusiuoti);
+
     std::vector<Student> geriStud;
     std::vector<Student> blogiStud;
 
@@ -224,8 +226,6 @@ void splitStudent(std::vector<Student> &stud, const std::string &geri, const std
     }
     stud.clear();
 
-    std::sort(geriStud.begin(), geriStud.end(), rusiuoti);
-    std::sort(blogiStud.begin(), blogiStud.end(), rusiuoti);
 
     auto end = std::chrono::high_resolution_clock::now();
     std::cout << "Studentų rūšiavimo į dvi grupes laikas: " << std::chrono::duration<double>(end - start).count() << " s\n" << std::endl;

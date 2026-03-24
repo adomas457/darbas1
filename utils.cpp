@@ -8,7 +8,6 @@
 #include <cstdlib>
 #include <chrono>
 
-
 int rusiavimas = 2;
 
 int getInt(const std::string &prompt, int min, int max) {
@@ -43,74 +42,6 @@ int utf8_length(std::string s) {
         if ((c & 0xC0) != 0x80) length++;
     }
     return length;
-}
-
-
-Student enterStudent() {
-    Student s;
-    std::cout << "Vardas: ";
-    std::cin >> s.name;
-    std::cout << "Pavardė: ";
-    std::cin >> s.surname;
-
-    int grade;
-    while (true) {
-        try {
-            std::cout << "Namų darbų įvertinimai (-1 baigti): ";
-
-            if (!(std::cin >> grade) || ((grade < 0 && grade != -1) || grade > 10)) throw std::runtime_error("Įveskite sveikąjį skaičių tarp 0 ir 10.");
-
-            if (grade == -1) {
-                break;
-            } else {
-                s.homework.push_back(grade);
-            } 
-        } catch (std::exception &e) {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << e.what() << std::endl;
-        }
-    }
-
-    s.exam = getInt("Įveskite egzamino įvertinimą: ", 0, 10);
-
-    return s;
-}
-
-Student enterStudent2() {
-    Student s;
-    std::cout << "Vardas: ";
-    std::cin >> s.name;
-    std::cout << "Pavardė: ";
-    std::cin >> s.surname;
-
-    int count = getInt("Atsitiktinai sugeneruotų namų darbų įvertinimų skaičius: ", 0);
-
-    for (int i = 0; i < count; i++) {
-        s.homework.push_back(rand() % 11);
-    }
-
-    s.exam = rand() % 11;
-
-    return s;
-}
-
-Student enterStudent3(int count) {
-    Student s;
-    s.name = vardai[rand() % vardai.size()];
-    if (s.name.back() == 's') {
-        s.surname = pavardes_vyr[rand() % pavardes_vyr.size()];
-    } else {
-        s.surname = pavardes_mot[rand() % pavardes_mot.size()];
-    }
-
-    for (int j = 0; j < count; j++) {
-        s.homework.push_back(rand() % 11);
-    }
-
-    s.exam = rand() % 11;
-
-    return s;
 }
 
 std::vector<Student> readFile(const std::string &filename) {
@@ -168,35 +99,6 @@ void generateFile(const std::string &filename, int n, int nd) {
     }
 }
 
-void printStudent(const Student& stu, int comm) {
-    int surnameWidth = 30;
-    int nameWidth = 25;
-
-    std::cout << stu.surname;
-    std::cout << std::string(surnameWidth - utf8_length(stu.surname), ' ');
-
-    std::cout << stu.name;
-    std::cout << std::string(nameWidth - utf8_length(stu.name), ' ');
-
-    if (comm == 1)
-        std::cout << std::fixed << std::setprecision(2) << stu.mean;
-    else
-        std::cout << std::fixed << std::setprecision(2) << stu.median;
-
-    std::cout << std::endl;
-}
-
-void printStudent(const Student& stu, std::ostream& out) {
-    int surnameWidth = 30;
-    int gradeWidth = 30;
-    int nameWidth = 25;
-
-    out << stu.surname << std::string(surnameWidth - utf8_length(stu.surname), ' ');
-    out << stu.name << std::string(nameWidth - utf8_length(stu.name), ' ');
-    out << std::left << std::setw(gradeWidth) << std::fixed << std::setprecision(2) << stu.mean;
-    out << std::fixed << std::setprecision(2) << stu.median;
-    out << '\n';
-}
 
 bool rusiuoti(const Student& s1, const Student& s2) {
     switch (rusiavimas) {

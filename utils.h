@@ -10,13 +10,7 @@
 int getInt(const std::string &prompt, int min = std::numeric_limits<int>::min(), int max = std::numeric_limits<int>::max());
 int utf8_length(std::string s);
 
-Student enterStudent();
-Student enterStudent2();
-Student enterStudent3(int count);
-
 std::vector<Student> readFile(const std::string& filename);
-void printStudent(const Student &stu, int comm);
-void printStudent(const Student& stu, std::ostream& out = std::cout);
 
 void generateFile(const std::string &filename, int n, int nd);
 

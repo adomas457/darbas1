@@ -23,7 +23,7 @@
 
 ![Excel](images/image2.png)
 
-![Veikimas](images/images3.png)
+![Veikimas](images/image3.png)
 
 ## Naudojimas
 

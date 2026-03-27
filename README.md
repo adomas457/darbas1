@@ -23,11 +23,14 @@
 
 ![Excel](images/image2.png)
 
+![Veikimas](images/images3.png)
+
 ## Naudojimas
 
-* Nukopijuokite testinius .txt failus į darbo folderį.
-* main.cpp faile galima pasirinkti konteinerio tipą (vector, list, deque) komentuojant / atkomentuojant atitinkamą eilutę.
-* Programoje konsolėje bus atspausdinti laiko matavimai kiekvienai strategijai.
+* Nukopijuokite testinius .txt failus į darbo folderį
+* main.cpp faile galima pasirinkti konteinerio tipą (vector, list, deque) komentuojant / atkomentuojant atitinkamą eilutę
+* Menu pasirinkimai: 1 - sugeneruoti failus iš kurių skaitoma, 2 - nuskaityti, rūšiuoti, skirstyti į grupes (matuoti laikus), 3 - exit
+* Programoje konsolėje bus atspausdinti laiko matavimai kiekvienai strategijai
 
 ## CMake instrukcija
 

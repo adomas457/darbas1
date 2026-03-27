@@ -32,8 +32,12 @@
 ## CMake instrukcija
 
 mkdir build
+
 cd build
+
 cmake ..
+
 cmake --build .
+
 ./darbas1
 

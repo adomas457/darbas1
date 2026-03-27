@@ -8,4 +8,4 @@ set(SOURCES main.cpp utils.cpp student.cpp)
 
 include_directories(${CMAKE_SOURCE_DIR})
 
-add_executable(StudentSorter ${SOURCES})
+add_executable(darbas1 ${SOURCES})

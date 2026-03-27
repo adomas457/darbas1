@@ -11,6 +11,7 @@
 #include <iomanip>
 #include <fstream>
 #include <algorithm>
+#include <deque>
 
 int getInt(const std::string &prompt, int min = std::numeric_limits<int>::min(), int max = std::numeric_limits<int>::max());
 int utf8_length(std::string s);
@@ -157,29 +158,55 @@ template<typename Container>
 void splitStudent3(Container &stud, const std::string &geri, const std::string &blogi) {
 
     auto start = std::chrono::high_resolution_clock::now();
+    auto end = start;
 
     if constexpr (std::is_same_v<Container, std::list<Student>>) {
+        start = std::chrono::high_resolution_clock::now();
         stud.sort(rusiuoti);
-    } else {
+        end = std::chrono::high_resolution_clock::now();
+        std::cout << "Studentų rūšiavimo pagal did. tvarka laikas: " << std::chrono::duration<double>(end - start).count() << " s\n" << std::endl;
+    } else if (std::is_same_v<Container, std::deque<Student>>) {
+        start = std::chrono::high_resolution_clock::now();
         std::sort(stud.begin(), stud.end(), rusiuoti);
+        end = std::chrono::high_resolution_clock::now();
+        std::cout << "Studentų rūšiavimo pagal did. tvarka laikas: " << std::chrono::duration<double>(end - start).count() << " s\n" << std::endl;
     }
 
-    auto end = std::chrono::high_resolution_clock::now();
-    std::cout << "Studentų rūšiavimo pagal did. tvarka laikas: " << std::chrono::duration<double>(end - start).count() << " s\n" << std::endl;
 
     start = std::chrono::high_resolution_clock::now();
 
-     auto splitPoint = std::stable_partition(stud.begin(), stud.end(),
-        [](const Student &s) {
-            return s.mean >= 5.0;
-        });
+    Container blogiStud;
 
-    Container blogiStud(splitPoint, stud.end());
-    stud.erase(splitPoint, stud.end());
+    if constexpr (!std::is_same_v<Container, std::vector<Student>>) {
+        auto it = stud.begin();
+        while (it != stud.end()) {
+            if (it->mean < 5.0) {
+                blogiStud.push_back(*it);
+                it = stud.erase(it);
+            } else {
+                it++;
+            }
+        }
+        
+    } else {
+        auto splitPoint = std::partition(stud.begin(), stud.end(), [](const Student &s) { return s.mean >= 5.0; });
 
-    
+        blogiStud = Container(splitPoint, stud.end()); 
+        stud.erase(splitPoint, stud.end());
+
+    }
+
     end = std::chrono::high_resolution_clock::now();
     std::cout << "Studentų skirstymo į dvi grupes laikas: " << std::chrono::duration<double>(end - start).count() << " s\n" << std::endl;
+
+    if constexpr (std::is_same_v<Container, std::vector<Student>>) {
+        start = std::chrono::high_resolution_clock::now();
+        std::sort(stud.begin(), stud.end(), rusiuoti);
+        std::sort(blogiStud.begin(), blogiStud.end(), rusiuoti);
+        end = std::chrono::high_resolution_clock::now();
+        std::cout << "Studentų rūšiavimo pagal did. tvarka laikas: " << std::chrono::duration<double>(end - start).count() << " s\n" << std::endl;
+    }
+
 }
 
 

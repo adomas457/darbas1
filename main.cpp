@@ -27,16 +27,14 @@ int main() {
 
         if (choice == 1) {
             int test = getInt("Įveskite įrašų skaičių: ", 1);
-            auto start = std::chrono::high_resolution_clock::now();
 
             generateFile("studentai" + std::to_string(test) + ".txt", test, 10);
 
-            auto end = std::chrono::high_resolution_clock::now();
-            std::cout << "Failo kūrimo laikas: " << std::chrono::duration<double>(end - start).count() << " s\n" << std::endl;
             
         } else if (choice == 2) {
             int test = getInt("Įveskite įrašų skaičių: ", 1);
             rusiavimas = getInt("Surūšiuoti pagal: vardą (1); pavardę (2); pagal vidurkį (3); pagal medianą (4): ", 1, 4);
+            int pasirinkimas = getInt("Strategijos nr.: ", 1, 2);
             try {
 
                 auto start = std::chrono::high_resolution_clock::now();
@@ -46,11 +44,14 @@ int main() {
                 auto end = std::chrono::high_resolution_clock::now();
                 std::cout << "Failo nuskaitymo laikas: " << std::chrono::duration<double>(end - start).count() << " s\n" << std::endl;
 
-                splitStudent<Container>(students, "geri" + std::to_string(test) + ".txt", "blogi"+ std::to_string(test) + ".txt");
+                if (pasirinkimas == 1) {
+                    splitStudent<Container>(students, "geri" + std::to_string(test) + ".txt", "blogi"+ std::to_string(test) + ".txt");
+                } else {
+                    splitStudent2<Container>(students, "geri" + std::to_string(test) + ".txt", "blogi"+ std::to_string(test) + ".txt");
+                }
+                
                 
                 students.clear();
-                //end = std::chrono::high_resolution_clock::now();
-                //std::cout << "Visos programos veikimo laikas: " << std::chrono::duration<double>(end - start).count() << " s\n" << std::endl;
             } 
             catch (std::exception& e) {
                 std::cout << e.what() << std::endl;

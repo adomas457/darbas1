@@ -23,3 +23,8 @@
 
 ![Excel](images/image2.png)
 
+## Naudojimas
+
+* Nukopijuokite testinius .txt failus į darbo folderį.
+* main.cpp faile galima pasirinkti konteinerio tipą (vector, list, deque) komentuojant / atkomentuojant atitinkamą eilutę.
+* Programoje konsolėje bus atspausdinti laiko matavimai kiekvienai strategijai.

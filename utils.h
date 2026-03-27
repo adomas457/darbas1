@@ -113,6 +113,66 @@ void splitStudent(Container &stud, const std::string &geri, const std::string &b
 */
 }
 
+
+
+template<typename Container>
+void splitStudent2(Container &stud, const std::string &geri, const std::string &blogi) {
+
+    auto start = std::chrono::high_resolution_clock::now();
+
+    if constexpr (std::is_same_v<Container, std::list<Student>>) {
+        stud.sort(rusiuoti);
+    } else {
+        std::sort(stud.begin(), stud.end(), rusiuoti);
+    }
+
+    auto end = std::chrono::high_resolution_clock::now();
+    std::cout << "Studentų rūšiavimo pagal did. tvarka laikas: " << std::chrono::duration<double>(end - start).count() << " s\n" << std::endl;
+
+    start = std::chrono::high_resolution_clock::now();
+
+    Container blogiStud;
+
+    
+    auto it = stud.begin();
+    while (it != stud.end()) {
+        if (it->mean < 5.0) {
+            blogiStud.push_back(*it);
+            it = stud.erase(it);
+        } else {
+            it++;
+        }
+    }
+    
+
+    end = std::chrono::high_resolution_clock::now();
+    std::cout << "Studentų skirstymo į dvi grupes laikas: " << std::chrono::duration<double>(end - start).count() << " s\n" << std::endl;
+
+/*
+    start = std::chrono::high_resolution_clock::now();
+
+    std::ofstream fileGeri(geri);
+    std::ofstream fileBlogi(blogi);
+
+    fileGeri << std::left << std::setw(25) << "Vardas" << std::left << std::setw(25) << "Pavarde" << std::left << std::setw(25) << "Galutinis (Vid.)" << 
+    "Galutinis (Med.)" << '\n';
+    for (const auto &s : stud) {
+        fileGeri << std::left << std::setw(25) << s.name << std::left << std::setw(25) << s.surname << std::left << std::setw(25) 
+        << std::fixed << std::setprecision(2) << s.mean << std::fixed << std::setprecision(2) << s.median << '\n';
+    }
+
+    fileBlogi << std::left << std::setw(25) << "Vardas" << std::left << std::setw(25) << "Pavarde" << std::left << std::setw(25) << "Galutinis (Vid.)" << 
+    "Galutinis (Med.)" << '\n';
+    for (const auto &s : blogiStud) {
+        fileBlogi << std::left << std::setw(25) << s.name << std::left << std::setw(25) << s.surname << std::left << std::setw(25) 
+        << std::fixed << std::setprecision(2) << s.mean << std::fixed << std::setprecision(2) << s.median << '\n';
+    }
+
+    end = std::chrono::high_resolution_clock::now();
+    std::cout << "Surūšiuotų studentų išvedimo į du failus laikas: " << std::chrono::duration<double>(end - start).count() << " s\n" << std::endl;
+*/
+}
+
 extern int rusiavimas;
 
 #endif

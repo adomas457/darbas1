@@ -11,8 +11,8 @@
 #include <list>
 
 int main() {
-    using Container = std::vector<Student>;
-    //using Container = std::deque<Student>;
+    //using Container = std::vector<Student>;
+    using Container = std::deque<Student>;
     //using Container = std::list<Student>;
 
     Container students;
@@ -34,7 +34,7 @@ int main() {
         } else if (choice == 2) {
             int test = getInt("Įveskite įrašų skaičių: ", 1);
             rusiavimas = getInt("Surūšiuoti pagal: vardą (1); pavardę (2); pagal vidurkį (3); pagal medianą (4): ", 1, 4);
-            int pasirinkimas = getInt("Strategijos nr.: ", 1, 2);
+            int pasirinkimas = getInt("Strategijos nr.: ", 1, 3);
             try {
 
                 auto start = std::chrono::high_resolution_clock::now();
@@ -46,8 +46,10 @@ int main() {
 
                 if (pasirinkimas == 1) {
                     splitStudent<Container>(students, "geri" + std::to_string(test) + ".txt", "blogi"+ std::to_string(test) + ".txt");
-                } else {
+                } else if (pasirinkimas == 2) {
                     splitStudent2<Container>(students, "geri" + std::to_string(test) + ".txt", "blogi"+ std::to_string(test) + ".txt");
+                } else {
+                    splitStudent3<Container>(students, "geri" + std::to_string(test) + ".txt", "blogi"+ std::to_string(test) + ".txt");
                 }
                 
                 

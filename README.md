@@ -1,4 +1,4 @@
-# v1.0
+# v1.0 pradinis
 
 ##### Sistemos parametrai:
 
@@ -11,5 +11,15 @@
 * Kiekvienam konteinerių tipui bei įrašų skaičiui testavimas atliktas 3 kartus (rodomi vidurkiai)
 * Kiekvienam testavimo atvejui naudojami tie patys .txt failai (1000, 10000 ir t.t.)
 * Lentelėje laikai rodomi sekundėmis
+* Visi testai atlikti su -O2
 
 ![Excel](images/image.png)
+
+# v1.0 galutinis
+
+* Kiekvienam konteinerių tipui (100k įrašų sk.) testavimas atliktas 3 kartus (rodomi vidurkiai)
+* Kiekvienam testavimo atvejui naudojamas tas pats .txt failas (100k)
+* 3 strategijoje vectoriui implementuotas "std::partition", o list ir deque - naudojama ta pati 2 strategija (stl funkcijos tik padidino skirstymo laiką)
+
+![Excel](images/image2.png)
+
